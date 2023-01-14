@@ -83,6 +83,7 @@ function TableUsers() {
       <ModalAddNew
         show={isShowModalAddNew}
         handleClose={() => setIsShowModalAddNew(false)}
+        handleUpdateTable={handleUpdateTable}
       />
     </>)
 }

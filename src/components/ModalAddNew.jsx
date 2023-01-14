@@ -6,7 +6,7 @@ import { postCreateUser } from '../services/UserServie'
 import { toast } from 'react-toastify';
 
 function ModalAddNew(props) {
-  const { show, handleClose } = props;
+  const { show, handleClose, handleUpdateTable } = props;
   const [name, setName] = useState('')
   const [job, setJob] = useState('')
 
@@ -17,6 +17,7 @@ function ModalAddNew(props) {
       setName('')
       setJob('')
       toast.success("A user is created succeed")
+      handleUpdateTable({ first_name: name, id: res.id })
     } else {
       toast.error('An erorr...')
     }
