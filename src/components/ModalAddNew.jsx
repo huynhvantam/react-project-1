@@ -17,6 +17,8 @@ function ModalAddNew(props) {
       setName('')
       setJob('')
       toast.success("A user is created succeed")
+    } else {
+      toast.error('An erorr...')
     }
   }
 
