@@ -1,13 +1,13 @@
-import _, { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
-import Table from 'react-bootstrap/Table';
-import ReactPaginate from 'react-paginate';
-import { fetchAllUse } from '../services/UserServie';
+import _, { debounce } from "lodash";
+import { useEffect, useState } from "react";
+import Table from "react-bootstrap/Table";
+import ReactPaginate from "react-paginate";
+import { fetchAllUse } from "../services/UserServie";
 import ModalAddNew from "./ModalAddNew";
-import ModalEditUser from './ModalEditUser';
-import ModalConfirm from './ModalConfirm';
+import ModalEditUser from "./ModalEditUser";
+import ModalConfirm from "./ModalConfirm";
 import { CSVLink, CSVDownload } from "react-csv";
-import './TableUser.scss'
+import "./TableUser.scss"
 function TableUsers() {
   const [listUsers, setListUsers] = useState([])
   const [totalUsers, setTotalUsers] = useState(0)
@@ -19,9 +19,10 @@ function TableUsers() {
 
   const [dataUserEdit, setDataUserEdit] = useState({})
   const [dataUserDelete, setDataUserDelete] = useState({})
+  const [dataExport, setDataExport] = useState([])
 
-  const [sortBy, setSortBy] = useState('asc')
-  const [sortField, setSortField] = useState('id')
+  const [sortBy, setSortBy] = useState("asc")
+  const [sortField, setSortField] = useState("id")
 
 
   const handleUpdateTable = (user) => {
@@ -85,7 +86,7 @@ function TableUsers() {
 
   const handleSearch = debounce((event) => {
     let term = event.target.value
-    console.log('%c⧭', 'color: #994d75', term);
+    console.log("%c⧭", "color: #994d75", term);
     if (term) {
       let cloneListUsers = _.cloneDeep(listUsers)
       cloneListUsers = cloneListUsers.filter(item => item.email.includes(term))
@@ -96,26 +97,40 @@ function TableUsers() {
     }
   }, 1000)
 
-  const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-  ];
+
+
+  const getUsersExport = (event, done) => {
+    let result = []
+    if (listUsers && listUsers.length > 0) {
+      result.push(["ID", "Email", "First Name", "Last Name"]);
+      listUsers.map((item, index) => {
+        let arr = [];
+        arr[0] = item.id
+        arr[1] = item.email
+        arr[2] = item.first_name
+        arr[3] = item.last_name
+        result.push(arr)
+      })
+      setDataExport(result)
+      done()
+    }
+  }
 
   return (
     <>
       <div className="my-3 d-flex justify-content-between">
         <span className="fw-bold">List user:</span>
-        <div className='group-btns'>
+        <div className="group-btns">
           <label htmlFor="test" className="btn btn-secondary mx-3">
             <i className="fa-solid fa-file-import"></i> &nbsp;
             Import</label>
-          <input type="file" id='test' hidden />
+          <input type="file" id="test" hidden />
           <CSVLink
             filename={"user.csv"}
             className="btn btn-primary"
-            data={csvData}
+            data={dataExport}
+            asyncOnClick={true}
+            onClick={getUsersExport}
           >
             <i className="fa-solid fa-download"></i>&nbsp;
             Export</CSVLink>
@@ -126,11 +141,11 @@ function TableUsers() {
           </button>
         </div>
       </div>
-      <div className='col-6 my-3'>
+      <div className="col-6 my-3">
         <input
           type="text"
           className="form-control "
-          placeholder='Search user by email...'
+          placeholder="Search user by email..."
           onChange={(event) => handleSearch(event)}
         />
       </div>
@@ -142,10 +157,10 @@ function TableUsers() {
                 <span>ID</span>
                 <span>
                   <i className="fa-sharp fa-solid fa-arrow-down"
-                    onClick={() => handleSort('asc', 'id')}
+                    onClick={() => handleSort("asc", "id")}
                   ></i>
                   <i className="fa-sharp fa-solid fa-arrow-up"
-                    onClick={() => handleSort('desc', 'id')}
+                    onClick={() => handleSort("desc", "id")}
                   ></i>
                 </span>
               </div>
@@ -155,10 +170,10 @@ function TableUsers() {
               <span>First Name</span>
               <span>
                 <i className="fa-sharp fa-solid fa-arrow-down"
-                  onClick={() => handleSort('acs', 'first_name')}
+                  onClick={() => handleSort("acs", "first_name")}
                 ></i>
                 <i className="fa-sharp fa-solid fa-arrow-up"
-                  onClick={() => handleSort('desc', 'first_name')}
+                  onClick={() => handleSort("desc", "first_name")}
                 ></i>
               </span>
             </div></th>
@@ -176,10 +191,10 @@ function TableUsers() {
                   <td>{item.first_name}</td>
                   <td>{item.last_name}</td>
                   <td>
-                    <button className='btn btn-warning mx-3'
+                    <button className="btn btn-warning mx-3"
                       onClick={() => handleEditUser(item)}
                     >Edit</button>
-                    <button className='btn btn-danger mx-3'
+                    <button className="btn btn-danger mx-3"
                       onClick={() => handleDeleteUser(item)}
                     >
                       Delete
