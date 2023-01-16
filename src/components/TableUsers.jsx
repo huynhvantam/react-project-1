@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
@@ -21,6 +21,7 @@ function TableUsers() {
 
   const [sortBy, setSortBy] = useState('asc')
   const [sortField, setSortField] = useState('id')
+
 
   const handleUpdateTable = (user) => {
     setListUsers([user, ...listUsers])
@@ -79,8 +80,20 @@ function TableUsers() {
     let cloneListUsers = _.cloneDeep(listUsers)
     cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy])
     setListUsers(cloneListUsers)
-    console.log('%c⧭', 'color: #00258c', cloneListUsers);
   }
+
+  const handleSearch = debounce((event) => {
+    let term = event.target.value
+    console.log('%c⧭', 'color: #994d75', term);
+    if (term) {
+      let cloneListUsers = _.cloneDeep(listUsers)
+      cloneListUsers = cloneListUsers.filter(item => item.email.includes(term))
+      setListUsers(cloneListUsers)
+
+    } else {
+      getUsers(1);
+    }
+  }, 1000)
 
   return (
     <>
@@ -88,6 +101,14 @@ function TableUsers() {
         <span className="fw-bold">List user:</span>
         <button className="btn btn-success"
           onClick={() => setIsShowModalAddNew(true)}>Add New User</button>
+      </div>
+      <div className='col-6 my-3'>
+        <input
+          type="text"
+          className="form-control "
+          placeholder='Search user by email...'
+          onChange={(event) => handleSearch(event)}
+        />
       </div>
       <Table striped bordered hover>
         <thead>
