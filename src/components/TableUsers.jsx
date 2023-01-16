@@ -6,6 +6,7 @@ import { fetchAllUse } from '../services/UserServie';
 import ModalAddNew from "./ModalAddNew";
 import ModalEditUser from './ModalEditUser';
 import ModalConfirm from './ModalConfirm';
+import { CSVLink, CSVDownload } from "react-csv";
 import './TableUser.scss'
 function TableUsers() {
   const [listUsers, setListUsers] = useState([])
@@ -95,12 +96,35 @@ function TableUsers() {
     }
   }, 1000)
 
+  const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  ];
+
   return (
     <>
       <div className="my-3 d-flex justify-content-between">
         <span className="fw-bold">List user:</span>
-        <button className="btn btn-success"
-          onClick={() => setIsShowModalAddNew(true)}>Add New User</button>
+        <div className='group-btns'>
+          <label htmlFor="test" className="btn btn-secondary mx-3">
+            <i className="fa-solid fa-file-import"></i> &nbsp;
+            Import</label>
+          <input type="file" id='test' hidden />
+          <CSVLink
+            filename={"user.csv"}
+            className="btn btn-primary"
+            data={csvData}
+          >
+            <i className="fa-solid fa-download"></i>&nbsp;
+            Export</CSVLink>
+          <button className="btn btn-success mx-3"
+            onClick={() => setIsShowModalAddNew(true)}>
+            <i className="fa-solid fa-plus"></i>&nbsp;
+            Add New User
+          </button>
+        </div>
       </div>
       <div className='col-6 my-3'>
         <input
