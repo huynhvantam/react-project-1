@@ -60,6 +60,12 @@ function TableUsers() {
     setDataUserDelete(user)
   }
 
+  const handleDeleteUserFrom = (user) => {
+    let cloneListUsers = _.cloneDeep(listUsers)
+    cloneListUsers = cloneListUsers.filter(item => item.id !== user.id)
+    setListUsers(cloneListUsers)
+  }
+
   return (
     <>
       <div className="my-3 d-flex justify-content-between">
@@ -137,6 +143,7 @@ function TableUsers() {
         show={isShowModalDelete}
         handleClose={handleClose}
         dataUserDelete={dataUserDelete}
+        handleDeleteUserFrom={handleDeleteUserFrom}
       />
     </>)
 }
