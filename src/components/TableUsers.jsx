@@ -6,16 +6,22 @@ import { fetchAllUse } from '../services/UserServie';
 import ModalAddNew from "./ModalAddNew";
 import ModalEditUser from './ModalEditUser';
 import ModalConfirm from './ModalConfirm';
-
+import './TableUser.scss'
 function TableUsers() {
   const [listUsers, setListUsers] = useState([])
   const [totalUsers, setTotalUsers] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
+
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
   const [isShowModalEdit, setIsShowModalEdit] = useState(false)
+  const [isShowModalDelete, setIsShowModalDelete] = useState(false)
+
   const [dataUserEdit, setDataUserEdit] = useState({})
   const [dataUserDelete, setDataUserDelete] = useState({})
-  const [isShowModalDelete, setIsShowModalDelete] = useState(false)
+
+  const [sortBy, setSortBy] = useState('asc')
+  const [sortField, setSortField] = useState('id')
+
   const handleUpdateTable = (user) => {
     setListUsers([user, ...listUsers])
   }
@@ -66,6 +72,13 @@ function TableUsers() {
     setListUsers(cloneListUsers)
   }
 
+  const handleSort = (sortBy, sortField) => {
+    setSortBy(sortBy)
+    setSortField(sortField)
+  }
+  console.log('%c⧭', 'color: #00ff88', sortBy, sortField);
+
+
   return (
     <>
       <div className="my-3 d-flex justify-content-between">
@@ -76,9 +89,31 @@ function TableUsers() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>
+              <div className="sort-header">
+                <span>ID</span>
+                <span>
+                  <i className="fa-sharp fa-solid fa-arrow-down"
+                    onClick={() => handleSort('desc', 'id')}
+                  ></i>
+                  <i className="fa-sharp fa-solid fa-arrow-up"
+                    onClick={() => handleSort('asc', 'id')}
+                  ></i>
+                </span>
+              </div>
+            </th>
             <th>Email</th>
-            <th>First Name</th>
+            <th> <div className="sort-header">
+              <span>First Name</span>
+              <span>
+                <i className="fa-sharp fa-solid fa-arrow-down"
+                  onClick={() => handleSort('desc', 'firs_name')}
+                ></i>
+                <i className="fa-sharp fa-solid fa-arrow-up"
+                  onClick={() => handleSort('asc', 'firs_name')}
+                ></i>
+              </span>
+            </div></th>
             <th>Last Name</th>
             <th>Actions</th>
           </tr>
