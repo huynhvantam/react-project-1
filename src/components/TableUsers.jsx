@@ -96,6 +96,7 @@ function TableUsers() {
     }
   }, 1000)
 
+<<<<<<< HEAD
   const csvData = [
     ["firstname", "lastname", "email"],
     ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -103,6 +104,8 @@ function TableUsers() {
     ["Yezzi", "Min l3b", "ymin@cocococo.com"]
   ];
 
+=======
+>>>>>>> 9c743581b046a4b3945722d7a458f6c035b46850
   return (
     <>
       <div className="my-3 d-flex justify-content-between">
@@ -125,6 +128,14 @@ function TableUsers() {
             Add New User
           </button>
         </div>
+      </div>
+      <div className='col-6 my-3'>
+        <input
+          type="text"
+          className="form-control "
+          placeholder='Search user by email...'
+          onChange={(event) => handleSearch(event)}
+        />
       </div>
       <div className='col-6 my-3'>
         <input
