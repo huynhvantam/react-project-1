@@ -75,9 +75,12 @@ function TableUsers() {
   const handleSort = (sortBy, sortField) => {
     setSortBy(sortBy)
     setSortField(sortField)
-  }
-  console.log('%c⧭', 'color: #00ff88', sortBy, sortField);
 
+    let cloneListUsers = _.cloneDeep(listUsers)
+    cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy])
+    setListUsers(cloneListUsers)
+    console.log('%c⧭', 'color: #00258c', cloneListUsers);
+  }
 
   return (
     <>
@@ -94,10 +97,10 @@ function TableUsers() {
                 <span>ID</span>
                 <span>
                   <i className="fa-sharp fa-solid fa-arrow-down"
-                    onClick={() => handleSort('desc', 'id')}
+                    onClick={() => handleSort('asc', 'id')}
                   ></i>
                   <i className="fa-sharp fa-solid fa-arrow-up"
-                    onClick={() => handleSort('asc', 'id')}
+                    onClick={() => handleSort('desc', 'id')}
                   ></i>
                 </span>
               </div>
@@ -107,10 +110,10 @@ function TableUsers() {
               <span>First Name</span>
               <span>
                 <i className="fa-sharp fa-solid fa-arrow-down"
-                  onClick={() => handleSort('desc', 'firs_name')}
+                  onClick={() => handleSort('acs', 'first_name')}
                 ></i>
                 <i className="fa-sharp fa-solid fa-arrow-up"
-                  onClick={() => handleSort('asc', 'firs_name')}
+                  onClick={() => handleSort('desc', 'first_name')}
                 ></i>
               </span>
             </div></th>
