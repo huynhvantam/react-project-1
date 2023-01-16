@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import { fetchAllUse } from '../services/UserServie';
 import ModalAddNew from "./ModalAddNew";
 import ModalEditUser from './ModalEditUser';
+import ModalConfirm from './ModalConfirm';
 
 function TableUsers() {
   const [listUsers, setListUsers] = useState([])
@@ -13,6 +14,8 @@ function TableUsers() {
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
   const [isShowModalEdit, setIsShowModalEdit] = useState(false)
   const [dataUserEdit, setDataUserEdit] = useState({})
+  const [dataUserDelete, setDataUserDelete] = useState({})
+  const [isShowModalDelete, setIsShowModalDelete] = useState(false)
   const handleUpdateTable = (user) => {
     setListUsers([user, ...listUsers])
   }
@@ -20,6 +23,7 @@ function TableUsers() {
   const handleClose = () => {
     setIsShowModalEdit(false)
     setIsShowModalAddNew(false)
+    setIsShowModalDelete(false)
   }
 
   useEffect(() => {
@@ -49,6 +53,11 @@ function TableUsers() {
     let index = listUsers.findIndex(item => item.id === user.id)
     cloneListUsers[index].first_name = user.first_name
     setListUsers(cloneListUsers)
+  }
+
+  const handleDeleteUser = (user) => {
+    setIsShowModalDelete(true)
+    setDataUserDelete(user)
   }
 
   return (
@@ -81,7 +90,11 @@ function TableUsers() {
                     <button className='btn btn-warning mx-3'
                       onClick={() => handleEditUser(item)}
                     >Edit</button>
-                    <button className='btn btn-danger mx-3'>Delete</button>
+                    <button className='btn btn-danger mx-3'
+                      onClick={() => handleDeleteUser(item)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               )
@@ -118,7 +131,12 @@ function TableUsers() {
         dataUserEdit={dataUserEdit}
         handleClose={handleClose}
         handleEditUserFromModal={handleEditUserFromModal}
+      />
 
+      <ModalConfirm
+        show={isShowModalDelete}
+        handleClose={handleClose}
+        dataUserDelete={dataUserDelete}
       />
     </>)
 }
