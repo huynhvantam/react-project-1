@@ -22,12 +22,10 @@ function Header() {
           <Nav>
             <NavDropdown title="Setting" id="basic-nav-dropdown">
               <NavDropdown.Item >
-                Login
-                {/* <NavLink to="/">Login</NavLink> */}
+                <NavLink to="/login">Login</NavLink>
               </NavDropdown.Item>
               <NavDropdown.Item >
-                Logout
-                {/* <NavLink to="/">Logout</NavLink> */}
+                <NavLink to="/logout">Logout</NavLink>
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
