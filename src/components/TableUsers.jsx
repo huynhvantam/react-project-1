@@ -93,7 +93,6 @@ function TableUsers() {
       let cloneListUsers = _.cloneDeep(listUsers)
       cloneListUsers = cloneListUsers.filter(item => item.email.includes(term))
       setListUsers(cloneListUsers)
-
     } else {
       getUsers(1);
     }

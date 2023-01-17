@@ -12,7 +12,6 @@ function ModalEditUser(props) {
     const handleEditUser = async () => {
         let res = await putUpdateUser(name, job)
         console.log('%c⧭', 'color: #ffcc00', res);
-
         if (res && res.updatedAt) {
             handleEditUserFromModal({
                 first_name: name,
