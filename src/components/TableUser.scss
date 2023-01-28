@@ -1,10 +1,13 @@
 .sort-header {
     display: flex;
     justify-content: space-between;
-
     i {
         cursor: pointer;
     }
+}
+
+.customize-table {
+    overflow-x: auto;
 }
 
 // .add-new {

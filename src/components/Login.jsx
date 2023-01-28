@@ -29,7 +29,7 @@ function Login() {
             return
         }
         setLoadingAPI(true)
-        let res = await loginApi(email, password)
+        let res = await loginApi(email.trim(), password)
         if (res && res.token) {
             loginContext(email, res.token)
             navigate('/')
@@ -48,6 +48,12 @@ function Login() {
         navigate('/')
     }
 
+    const handlePressEnter = (event) => {
+        if (event && event.key === 'Enter') {
+            handleLogin();
+        }
+    }
+
     return (<>
         <div className="login-container col-12 col-sm-4">
             <header className="title">Log in </header>
@@ -57,7 +63,9 @@ function Login() {
             <div className="input-2">
                 <input type={isShowPassword === true ? 'text' : 'password'}
                     placeholder='Password' value={password}
-                    onChange={(event) => { setPassword(event.target.value) }} />
+                    onChange={(event) => { setPassword(event.target.value) }}
+                    onKeyDown={(event) => handlePressEnter(event)}
+                />
                 <i className={isShowPassword === true ? 'fa-solid fa-eye' : 'fa-solid fa-slash'}
                     onClick={() => setIsShowPassword(!isShowPassword)}></i>
             </div>

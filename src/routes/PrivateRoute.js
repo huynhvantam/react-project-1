@@ -11,7 +11,7 @@ function PrivateRoute(props) {
       <>
         <Alert variant="danger" className="mt-3">
           <Alert.Heading>OH snap! You got an error!</Alert.Heading>
-          <p>You don't have permisson to acess this route</p>
+          <p>You don't have permisson to access this route</p>
         </Alert>
       </>
     );

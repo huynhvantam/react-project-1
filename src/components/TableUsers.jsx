@@ -162,7 +162,7 @@ function TableUsers() {
 
   return (
     <>
-      <div className="my-3 d-flex justify-content-between">
+      <div className="my-3 d-sm-flex justify-content-between">
         <span className="fw-bold">List user:</span>
         <div className="group-btns">
           <label htmlFor="test" className="btn btn-secondary mx-3">
@@ -195,63 +195,65 @@ function TableUsers() {
           onChange={(event) => handleSearch(event)}
         />
       </div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>
-              <div className="sort-header">
-                <span>ID</span>
+      <div className="customize-table">
+        <Table striped bordered hover >
+          <thead>
+            <tr>
+              <th>
+                <div className="sort-header">
+                  <span>ID</span>
+                  <span>
+                    <i className="fa-sharp fa-solid fa-arrow-down"
+                      onClick={() => handleSort("asc", "id")}
+                    ></i>
+                    <i className="fa-sharp fa-solid fa-arrow-up"
+                      onClick={() => handleSort("desc", "id")}
+                    ></i>
+                  </span>
+                </div>
+              </th>
+              <th>Email</th>
+              <th> <div className="sort-header">
+                <span>First Name</span>
                 <span>
                   <i className="fa-sharp fa-solid fa-arrow-down"
-                    onClick={() => handleSort("asc", "id")}
+                    onClick={() => handleSort("acs", "first_name")}
                   ></i>
                   <i className="fa-sharp fa-solid fa-arrow-up"
-                    onClick={() => handleSort("desc", "id")}
+                    onClick={() => handleSort("desc", "first_name")}
                   ></i>
                 </span>
-              </div>
-            </th>
-            <th>Email</th>
-            <th> <div className="sort-header">
-              <span>First Name</span>
-              <span>
-                <i className="fa-sharp fa-solid fa-arrow-down"
-                  onClick={() => handleSort("acs", "first_name")}
-                ></i>
-                <i className="fa-sharp fa-solid fa-arrow-up"
-                  onClick={() => handleSort("desc", "first_name")}
-                ></i>
-              </span>
-            </div></th>
-            <th>Last Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listUsers && listUsers.length > 0 &&
-            listUsers.map((item, index) => {
-              return (
-                <tr key={`users-${index}`}>
-                  <td>{item.id}</td>
-                  <td>{item.email}</td>
-                  <td>{item.first_name}</td>
-                  <td>{item.last_name}</td>
-                  <td>
-                    <button className="btn btn-warning mx-3"
-                      onClick={() => handleEditUser(item)}
-                    >Edit</button>
-                    <button className="btn btn-danger mx-3"
-                      onClick={() => handleDeleteUser(item)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </Table>
+              </div></th>
+              <th>Last Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listUsers && listUsers.length > 0 &&
+              listUsers.map((item, index) => {
+                return (
+                  <tr key={`users-${index}`}>
+                    <td>{item.id}</td>
+                    <td>{item.email}</td>
+                    <td>{item.first_name}</td>
+                    <td>{item.last_name}</td>
+                    <td>
+                      <button className="btn btn-warning mx-3"
+                        onClick={() => handleEditUser(item)}
+                      >Edit</button>
+                      <button className="btn btn-danger mx-3"
+                        onClick={() => handleDeleteUser(item)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </Table>
+      </div>
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
@@ -259,7 +261,6 @@ function TableUsers() {
         pageRangeDisplayed={5}
         pageCount={totalPages}
         previousLabel="< previous"
-
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
