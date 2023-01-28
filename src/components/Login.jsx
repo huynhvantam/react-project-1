@@ -3,9 +3,12 @@ import { loginApi } from '../services/UserServie'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
+import { useContext } from 'react'
+import { UserContext } from '../context/UserContext'
 function Login() {
-
     const navigate = useNavigate();
+    const { loginContext } = useContext(UserContext);
+
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -28,7 +31,7 @@ function Login() {
         setLoadingAPI(true)
         let res = await loginApi(email, password)
         if (res && res.token) {
-            localStorage.setItem('token', res.token)
+            loginContext(email, res.token)
             navigate('/')
         } else {
             //error
@@ -39,6 +42,10 @@ function Login() {
         }
         setLoadingAPI(false)
 
+    }
+
+    const handleGoBack = () => {
+        navigate('/')
     }
 
     return (<>
@@ -64,7 +71,9 @@ function Login() {
             </button>
 
             <div className="back">
-                <i className='fa-solid fa-angles-left'></i>Go back</div>
+                <i className='fa-solid fa-angles-left'></i>
+                <span onClick={() => handleGoBack()}>&nbsp;Go back</span>
+            </div>
         </div>
         <footer className="footer-app"></footer>
 
